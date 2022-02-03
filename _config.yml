@@ -36,7 +36,7 @@ author:
   type      : # "person" (default), "organization"
   name      : Feiyan Zhao
   url       : https://feiyanaijinchao.com
-  avatar    : /assets/images/Jinchao.png # path or url of avatar image (square)
+  avatar    : /assets/images/feiyanaijinchao.png # path or url of avatar image (square)
   bio       : > # > means to ignore newlines until "email"
     Master at Shanghai Jiaotong University, Shanghai, China
   email     : karenzhao@sjtu.edu.cn
