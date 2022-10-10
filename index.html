@@ -1,101 +1,112 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="utf-8">
-    <title>HOME</title>
+    <title>添加点标记</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <style>
-    body,
-    html,
-    #container {
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        font-family: "微软雅黑";
-    }
+        body,
+        html,
+        #container {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
     </style>
     <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=2uzbji3cqKkupkG6gt9tHZeiGiLifX0z"></script>
 </head>
+
 <body>
     <div id="container"></div>
 </body>
+
 </html>
 <script>
 
-//创建地图
-var map = new BMapGL.Map('container');
-map.centerAndZoom(new BMapGL.Point(104.19, 35.86), 6);
-map.enableScrollWheelZoom(true);
-map.setDisplayOptions({
-  poiText: false,
-  poiIcon: false
-})
-map.setMapStyleV2({
-  styleJson:  [{
-    "featureType": "road",
-    "elementType": "all",
-    "stylers": {
-        "visibility": "off"
+    //创建地图
+    var map = new BMapGL.Map('container');
+    map.centerAndZoom(new BMapGL.Point(104.19, 35.86), 6);
+    map.enableScrollWheelZoom(true);
+    map.setDisplayOptions({
+        poiText: false,
+        poiIcon: false
+    })
+    map.setMapStyleV2({
+        styleJson: [{
+            "featureType": "road",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "district",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "town",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "village",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "island",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }]
+    })
+    //创建地址解析器实例
+    var myGeo = new BMapGL.Geocoder();
+    //添加城市
+    var colorDict = {
+        0: 'rgba(255, 0, 0, 0.01)',  //red
+        1: 'rgba(0, 255, 0, 0.01)',  //green
+        2: 'rgba(0, 0, 255, 0.01)'   //blue
+    };
+    function addCity(name, color = 1) {
+        myGeo.getPoint(name, function (point) {
+            if (point) {
+                label = new BMapGL.Label(name, { position: point, offset: new BMapGL.Size(-14, -10) })
+                label.setStyle({ backgroundColor: 'none', border: 0, fontSize: '1px'})
+                map.addOverlay(label)
+                //marker = new BMapGL.Marker(point)
+                //marker.setLabel(label)
+                //map.addOverlay(marker)
+                map.addOverlay(new BMapGL.Circle(point, 50000, { strokeWeight: 0.01, fillColor: colorDict[color] }))
+            } else {
+                alert('您选择的地址没有解析到结果！');
+            }
+        }, name)
     }
-}, {
-    "featureType": "district",
-    "elementType": "all",
-    "stylers": {
-        "visibility": "off"
-    }
-}, {
-    "featureType": "town",
-    "elementType": "all",
-    "stylers": {
-        "visibility": "off"
-    }
-}, {
-    "featureType": "village",
-    "elementType": "all",
-    "stylers": {
-        "visibility": "off"
-    }
-}, {
-    "featureType": "island",
-    "elementType": "all",
-    "stylers": {
-        "visibility": "off"
-    }
-}]
-})
-//创建地址解析器实例
-var myGeo = new BMapGL.Geocoder();
-//添加城市
-var colorDict = {
-    0: 'rgba(255, 0, 0, 0.1)',
-    1: 'rgba(0, 255, 0, 0.1)',
-    2: 'rgba(0, 0, 255, 0.1)'
-};
-function addCity(name, color = 1){
-    myGeo.getPoint(name, function(point){
-    if(point){
-        label = new BMapGL.Label(name, {position: point, offset: new BMapGL.Size(-14, -10)})
-        label.setStyle({backgroundColor: 'none', border: 0, fontSize: '13px'})
-        map.addOverlay(label)
-        //marker = new BMapGL.Marker(point)
-        //marker.setLabel(label)
-        //map.addOverlay(marker)
-        map.addOverlay(new BMapGL.Circle(point, 100000, {strokeWeight: 0.1, fillColor: colorDict[color]}))
-    }else{
-        alert('您选择的地址没有解析到结果！');
-    }
-}, name)
-}
 
-//添加城市
-addCity('北京', 1)
-addCity('上海', 2)
-addCity('杭州', 0)
-addCity('南京', 1)
+    //添加城市
+    var cities = ['铜陵', '池州', '安庆', '合肥', '淮北', '宁德', '兰州', '珠海', '河源', '云浮', '贵阳', '贵州', '沧州', '承德', '石家庄', '安阳', '漯河', '济源', '信阳', '驻马店', '三门峡', '开封', '咸宁', '黄石', '汉川', '荆门', '衡阳', '淮安', '扬州', '张家港', '常州', '盐城', '南通', '南京', '昆山', '常熟', '九江', '营口', '包头', '扎兰屯', '乌海', ' 中卫', '淄博', '日照', '济南', '滕州', '枣庄', '青岛', '邹平', '临沂', '泰安', '太原', '吕梁', '临汾', '长治', '运城', '韩城', '汉中', '宝鸡', '咸阳', '上海', '内江', '眉山', '成都', '天津', '五家渠', '喀什', '曲靖', '杭州', '衢州', '平湖', '重庆', '防城港', '吉林', '双鸭山']
+    var colors = [1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 0, 1, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 0, 2, 2, 1, null, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, null, 1, 2, 2, null, 1, 2, 2, 2]
+
+    for (var i = 0; i < cities.length; i++) {
+        if (colors[i] !== null) {
+            addCity(cities[i], colors[i])
+        }
+    }
+
 //map.getDistance(start: Point , end: Point)
 //map.getMapScreenshot()
-
+//加点
+//https://lbsyun.baidu.com/jsdemo.htm#eAddMarker
+//测距
+//https://lbsyun.baidu.com/jsdemo.htm#gl_tool_1
 </script>
