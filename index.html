@@ -73,9 +73,9 @@
     var myGeo = new BMapGL.Geocoder();
     //添加城市
     var colorDict = {
-        0: 'rgba(255, 0, 0, 0.01)',  //red
-        1: 'rgba(0, 255, 0, 0.01)',  //green
-        2: 'rgba(0, 0, 255, 0.01)'   //blue
+        0: 'rgba(255, 0, 0, 0.001)',  //red
+        1: 'rgba(0, 255, 0, 0.001)',  //green
+        2: 'rgba(0, 0, 255, 0.001)'   //blue
     };
     function addCity(name, color = 1) {
         myGeo.getPoint(name, function (point) {
@@ -86,7 +86,7 @@
                 //marker = new BMapGL.Marker(point)
                 //marker.setLabel(label)
                 //map.addOverlay(marker)
-                map.addOverlay(new BMapGL.Circle(point, 50000, { strokeWeight: 0.01, fillColor: colorDict[color] }))
+                map.addOverlay(new BMapGL.Circle(point, 150000, { strokeWeight: 0.01, fillColor: colorDict[color] }))
             } else {
                 alert('您选择的地址没有解析到结果！');
             }
