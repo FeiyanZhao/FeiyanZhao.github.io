@@ -73,20 +73,20 @@
     var myGeo = new BMapGL.Geocoder();
     //添加城市
     var colorDict = {
-        0: 'rgba(255, 0, 0, 0.001)',  //red
-        1: 'rgba(0, 255, 0, 0.001)',  //green
-        2: 'rgba(0, 0, 255, 0.001)'   //blue
+        0: 'rgba(255, 0, 0, 0.5)',  //red
+        1: 'rgba(0, 255, 0, 0.5)',  //green
+        2: 'rgba(0, 0, 255, 0.5)'   //blue
     };
     function addCity(name, color = 1) {
         myGeo.getPoint(name, function (point) {
             if (point) {
-                label = new BMapGL.Label(name, { position: point, offset: new BMapGL.Size(-14, -10) })
-                label.setStyle({ backgroundColor: 'none', border: 0, fontSize: '1px'})
+                label = new BMapGL.Label(name, { position: point, offset: new BMapGL.Size(-6.5*name.length, -10) })
+                label.setStyle({ backgroundColor: colorDict[color], border: 0, fontSize: 'xx-small' })
                 map.addOverlay(label)
                 //marker = new BMapGL.Marker(point)
                 //marker.setLabel(label)
                 //map.addOverlay(marker)
-                map.addOverlay(new BMapGL.Circle(point, 150000, { strokeWeight: 0.01, fillColor: colorDict[color] }))
+                map.addOverlay(new BMapGL.Circle(point, 150000, { strokeWeight: 0.1, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
             } else {
                 alert('您选择的地址没有解析到结果！');
             }
@@ -94,8 +94,8 @@
     }
 
     //添加城市
-    var cities = ['铜陵', '池州', '安庆', '合肥', '淮北', '宁德', '兰州', '珠海', '河源', '云浮', '贵阳', '贵州', '沧州', '承德', '石家庄', '安阳', '漯河', '济源', '信阳', '驻马店', '三门峡', '开封', '咸宁', '黄石', '汉川', '荆门', '衡阳', '淮安', '扬州', '张家港', '常州', '盐城', '南通', '南京', '昆山', '常熟', '九江', '营口', '包头', '扎兰屯', '乌海', ' 中卫', '淄博', '日照', '济南', '滕州', '枣庄', '青岛', '邹平', '临沂', '泰安', '太原', '吕梁', '临汾', '长治', '运城', '韩城', '汉中', '宝鸡', '咸阳', '上海', '内江', '眉山', '成都', '天津', '五家渠', '喀什', '曲靖', '杭州', '衢州', '平湖', '重庆', '防城港', '吉林', '双鸭山']
-    var colors = [1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 0, 1, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 0, 2, 2, 1, null, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, null, 1, 2, 2, null, 1, 2, 2, 2]
+    var cities = ['运城','平湖','喀什','驻马店','临汾','漯河','济源','青岛','枣庄','滕州','信阳','双鸭山','承德','黄石','吉林','九江','汉川','南京','南通','扎兰屯','吕梁','沧州','防城港','贵阳','河源','衢州','杭州','咸宁','衡阳','池州','荆门','安庆','合肥','淮北','开封','扬州','三门峡','宁德','兰州','珠海','云浮','贵州','安阳','石家庄','淮安','营口','铜陵','曲靖','天津','成都','眉山','内江','上海','咸阳','宝鸡','汉中','韩城','长治','常州','泰安','临沂','邹平','重庆','日照','淄博','中卫','乌海','包头','常熟','昆山','盐城','五家渠','张家港','济南','太原']
+    var colors = [null, null, null, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]
 
     for (var i = 0; i < cities.length; i++) {
         if (colors[i] !== null) {
