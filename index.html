@@ -80,12 +80,13 @@
     function addCity(name, color = 1) {
         myGeo.getPoint(name, function (point) {
             if (point) {
-                label = new BMapGL.Label(name, { position: point, offset: new BMapGL.Size(-6.5*name.length, -10) })
-                label.setStyle({ backgroundColor: colorDict[color], border: 0, fontSize: 'xx-small' })
-                map.addOverlay(label)
+//                 label = new BMapGL.Label(name, { position: point, offset: new BMapGL.Size(-6.5*name.length, -10) })
+//                 label.setStyle({ backgroundColor: colorDict[color], border: 0, fontSize: 'xx-small' })
+//                 map.addOverlay(label)
                 //marker = new BMapGL.Marker(point)
                 //marker.setLabel(label)
                 //map.addOverlay(marker)
+                map.addOverlay(new BMapGL.Circle(point, 10000, { strokeWeight: 1, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
                 map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 1, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0 }))
             } else {
                 alert('您选择的地址没有解析到结果！');
