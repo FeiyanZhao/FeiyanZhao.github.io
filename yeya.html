@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>液氩</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <style>
+        body,
+        html,
+        #container {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
+    <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=2uzbji3cqKkupkG6gt9tHZeiGiLifX0z"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+</body>
+
+</html>
+<script>
+
+    //创建地图
+    var map = new BMapGL.Map('container');
+    map.centerAndZoom(new BMapGL.Point(104.19, 35.86), 6);
+    map.enableScrollWheelZoom(true);
+    map.setDisplayOptions({
+        poiText: false,
+        poiIcon: false
+    })
+    map.setMapStyleV2({
+        styleJson: [{
+            "featureType": "road",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "district",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "town",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "village",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }, {
+            "featureType": "island",
+            "elementType": "all",
+            "stylers": {
+                "visibility": "off"
+            }
+        }]
+    })
+    //创建地址解析器实例
+    var myGeo = new BMapGL.Geocoder();
+    //添加城市
+    var colorDict = {
+        0: 'rgba(255, 0, 0, 0.5)',  //red
+        1: 'rgba(0, 255, 0, 0.5)',  //green
+        2: 'rgba(0, 0, 255, 0.5)'   //blue
+    };
+    function addCity(name, color = 1) {
+        myGeo.getPoint(name, function (point) {
+            if (point) {
+              label = new BMapGL.Label(name, { position: point, })//offset: new BMapGL.Size(-6.5*name.length, -10) })
+               label.setStyle({ backgroundColor: null, border: 0, fontSize: 'xx-small' })
+                 map.addOverlay(label)
+                //marker = new BMapGL.Marker(point)
+                //marker.setLabel(label)
+                //map.addOverlay(marker)
+                map.addOverlay(new BMapGL.Circle(point, 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
+                if (color == 1) {
+                map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
+                } else {
+                  map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.3 }))
+                }
+            } else {
+                alert('您选择的地址没有解析到结果！');
+            }
+        }, name)
+    }
+
+    //添加城市
+    var cities = ['双鸭山', '青岛', '滕州', '济南', '扎兰屯', '吉林', '南京', '南通', '张家港', '汉川', '黄石', '驻马店', '信阳', '济源', '漯河', '承德', '沧州', '贵阳', '河源', '枣庄', '九江', '衢州', '太原', '吕梁', '临汾', '防城港', '杭州', '安阳', '内江', '眉山', '咸宁', '开封', '三门峡', '成都', '天津', '五家渠', '曲靖', '太原', '石家庄', '衡阳', '贵州', '重庆', '云浮', '珠海', '兰州', '宁德', '合肥', '池州', '荆门', '扬州', '淮安', '泰安', '临沂', '邹平', '长治', '济南', '日照', '淄博', ' 中卫', '乌海', '韩城', '包头', '营口', '汉中', '常熟', '昆山', '宝鸡', '南京', '咸阳', '盐城', '常州', '上海', '张家港', '铜陵']
+    var colors = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+
+    for (var i = 0; i < cities.length; i++) {
+        if (colors[i] !== null) {
+            addCity(cities[i], colors[i])
+        }
+    }
+
+//map.getDistance(start: Point , end: Point)
+//map.getMapScreenshot()
+//加点
+//https://lbsyun.baidu.com/jsdemo.htm#eAddMarker
+//测距
+//https://lbsyun.baidu.com/jsdemo.htm#gl_tool_1
+</script>
