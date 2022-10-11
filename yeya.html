@@ -88,9 +88,9 @@
                 //map.addOverlay(marker)
                 map.addOverlay(new BMapGL.Circle(point, 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
                 if (color == 1) {
-                map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
+                map.addOverlay(new BMapGL.Circle(point, 700000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
                 } else {
-                  map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.3 }))
+                  map.addOverlay(new BMapGL.Circle(point, 700000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.3 }))
                 }
             } else {
                 alert('您选择的地址没有解析到结果！');
