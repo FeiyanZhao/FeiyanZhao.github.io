@@ -84,7 +84,7 @@
                 map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
                 // label and central point
                 if (overlap.includes(name) && color == 1) {
-                    map.addOverlay(new BMapGL.Circle(new BMapGL.Point(point.lng, point.lat + 0.001), 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
+                    map.addOverlay(new BMapGL.Circle(new BMapGL.Point(point.lng + 0.25, point.lat), 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
                 } else {
                     label = new BMapGL.Label(name, { position: point, })//offset: new BMapGL.Size(-6.5*name.length, -10) })
                     label.setStyle({ backgroundColor: null, border: 0, fontSize: 'xx-small' })
