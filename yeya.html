@@ -81,7 +81,7 @@
         myGeo.getPoint(name, function (point) {
             if (point) {
                 // circle
-                map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
+                map.addOverlay(new BMapGL.Circle(point, 700000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
                 // label and central point
                 if (overlap.includes(name) && color == 1) {
                     map.addOverlay(new BMapGL.Circle(new BMapGL.Point(point.lng, point.lat + 0.001), 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
