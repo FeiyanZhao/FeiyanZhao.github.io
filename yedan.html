@@ -77,20 +77,21 @@
         1: 'rgba(0, 255, 0, 0.5)',  //green
         2: 'rgba(0, 0, 255, 0.5)'   //blue
     };
-    function addCity(name, color = 1) {
+    
+    function addCity(name, color = 1, overlap = []) {
         myGeo.getPoint(name, function (point) {
             if (point) {
-              label = new BMapGL.Label(name, { position: point, })//offset: new BMapGL.Size(-6.5*name.length, -10) })
-               label.setStyle({ backgroundColor: null, border: 0, fontSize: 'xx-small' })
-                 map.addOverlay(label)
-                //marker = new BMapGL.Marker(point)
-                //marker.setLabel(label)
-                //map.addOverlay(marker)
-                map.addOverlay(new BMapGL.Circle(point, 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
-                if (color == 1) {
+                // circle
                 map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.1 }))
+                // label and central point
+                if (overlap.includes(name) && color == 1) {
+                    map.addOverlay(new BMapGL.Circle(new BMapGL.Point(point.lng, point.lat + 0.001), 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
                 } else {
-                  map.addOverlay(new BMapGL.Circle(point, 300000, { strokeWeight: 0, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 0.3 }))
+                    label = new BMapGL.Label(name, { position: point, })//offset: new BMapGL.Size(-6.5*name.length, -10) })
+                    label.setStyle({ backgroundColor: null, border: 0, fontSize: 'xx-small' })
+                    map.addOverlay(label)
+                    // central point
+                    map.addOverlay(new BMapGL.Circle(point, 10000, { strokeWeight: 5, strokeColor: colorDict[color], fillColor: colorDict[color], fillOpacity: 1 }))
                 }
             } else {
                 alert('您选择的地址没有解析到结果！');
@@ -98,13 +99,26 @@
         }, name)
     }
 
+    function overlapedList(array) {
+        var dic = {};
+        array.forEach(val => dic[val] = (dic[val] || 0) + 1);
+        var ans = [];
+        for (var key in dic) {
+            if (dic[key] > 1) {
+                ans.push(key)
+            }
+        }
+        return ans;
+    }
+
     //添加城市
     var cities = ['双鸭山', '临汾', '太原', '济源', '青岛', '枣庄', '滕州', '济南', '信阳', '驻马店', '扎兰屯', '黄石', '汉川', '九江', '吉林', '南京', '南通', '吕梁', '漯河', '承德', '河源', '防城港', '衢州', '杭州', '沧州', '张家港', '贵阳', '云浮', '扬州', '淮安', '石家庄', '衡阳', '池州', '荆门', '安阳', '张家港', '安庆', '合肥', '淮北', '咸宁', '贵州', '三门峡', '宁德', '兰州', '珠海', '开封', '常熟', '常州', '长治', '重庆', '曲靖', '五家渠', '天津', '成都', '眉山', '内江', '上海', '咸阳', '宝鸡', '汉中', '韩城', '太原', '盐城', '泰安', '临沂', '邹平', '济南', '日照', '淄博', ' 中卫', '乌海', '包头', '营口', '昆山', '南京', '铜陵']
     var colors = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
+    var overlap = overlapedList(cities)
     for (var i = 0; i < cities.length; i++) {
         if (colors[i] !== null) {
-            addCity(cities[i], colors[i])
+            addCity(cities[i], colors[i], overlap)
         }
     }
 
